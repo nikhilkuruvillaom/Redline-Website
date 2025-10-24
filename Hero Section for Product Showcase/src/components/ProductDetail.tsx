@@ -1,6 +1,15 @@
 import { X } from "lucide-react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
+import imgPowerPotionMockUp222 from "../assets/afcb1ae8368b5155cf92cb93462da098e9d69620.png";
+import imgSnackbar2 from "../assets/9e8c9dc75f917fd85be83dcc148ef6c9919b1dba.png";
+import imgScreenshot20250604At40128Pm1 from "../assets/7d3af95862a93e76dd6971c0d720622da3051329.png";
+import imgScreenshot20250604At123730Pm from "../assets/bfdb3dda6e8036b9db5b51fd24f680affd0a619b.png";
+import imgScreenshot20250604At32233Pm1 from "../assets/c1e3be74d807abc9993c0af7e14044a10c998292.png";
+import imgScreenshot20250604At123817Pm from "../assets/1f4f878a8939c45be63b6d72545ef0a9f67a864e.png";
+import imgScreenshot20250604At22641Pm1 from "../assets/c576374d9850019f874b9d85d0f7c1f855739efb.png";
+import imgScreenshot20250604At34008Pm1 from "../assets/f6ab21e52f03fd5997b50614beec55433df9fffb.png";
+import imgScreenshot20250604At63041Pm1 from "../assets/7d1bc72ae56b0addb3215c58f57a2f605abc3154.png";
 
 interface ProductDetailProps {
   id: number;
@@ -41,56 +50,55 @@ export function ProductDetail({
   // Subtle opacity fade
   const imageOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 1, 0.6]);
 
+  // Get product image based on title
+  const getProductImage = () => {
+    switch (title) {
+      case "POWER POTION":
+        return imgPowerPotionMockUp222;
+      case "SPICED ALMOND BAR":
+        return imgSnackbar2;
+      case "MACA-LEMON BITES":
+        return imgScreenshot20250604At40128Pm1;
+      case "LAVENDER HONEY LIP BALM":
+        return imgScreenshot20250604At123730Pm;
+      case "CUCUMBER MIST":
+        return imgScreenshot20250604At32233Pm1;
+      case "VANILLA OAT BODYMILK":
+        return imgScreenshot20250604At123817Pm;
+      case "PEPPERMINT GINGER ELIXIR":
+        return imgScreenshot20250604At22641Pm1;
+      case "DO-NOT-DISTURB SOY CANDLE":
+        return imgScreenshot20250604At34008Pm1;
+      case "CHAMOMILE PILLOW MIST":
+        return imgScreenshot20250604At63041Pm1;
+      default:
+        return null;
+    }
+  };
+
   const ProductImage = ({ size = "default" }: { size?: "default" | "large" }) => {
-    const dimensions =
-      size === "large"
-        ? { width: "280px", height: "420px" }
-        : { width: "220px", height: "330px" };
+    const productImage = getProductImage();
+    const imageHeight = size === "large" ? "500px" : "400px";
+    
+    if (!productImage) {
+      return null;
+    }
 
     return (
       <div
-        className="border rounded-xl relative mx-auto"
+        className="relative mx-auto"
         style={{
-          width: dimensions.width,
-          height: dimensions.height,
-          borderColor:
-            textColor === "#FFFFFF"
-              ? "rgba(255,255,255,0.15)"
-              : "rgba(0,0,0,0.08)",
-          borderWidth: "1px",
+          height: imageHeight,
+          width: "auto",
         }}
       >
-        {/* Bottle neck */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[30%] h-[15%] border border-b-0 rounded-t"
+        <img
+          src={productImage}
+          alt={title}
+          className="h-full w-auto object-contain mx-auto"
           style={{
-            borderColor:
-              textColor === "#FFFFFF"
-                ? "rgba(255,255,255,0.15)"
-                : "rgba(0,0,0,0.08)",
-          }}
-        />
-
-        {/* Cap */}
-        <div
-          className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border rounded-sm"
-          style={{
-            borderColor:
-              textColor === "#FFFFFF"
-                ? "rgba(255,255,255,0.15)"
-                : "rgba(0,0,0,0.08)",
-            backgroundColor: backgroundColor,
-          }}
-        />
-
-        {/* Label */}
-        <div
-          className="absolute top-[40%] left-1/2 -translate-x-1/2 w-[70%] h-[25%] border rounded-lg"
-          style={{
-            borderColor:
-              textColor === "#FFFFFF"
-                ? "rgba(255,255,255,0.15)"
-                : "rgba(0,0,0,0.08)",
+            maxHeight: imageHeight,
+            filter: "drop-shadow(0 10px 40px rgba(0,0,0,0.15))",
           }}
         />
       </div>
